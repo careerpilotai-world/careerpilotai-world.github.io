@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CareerPilot AI | Global Careers</title>
+<meta name="description" content="Discover international job opportunities and build your CV for free.">
+<style>
+:root{font-family:Arial,sans-serif;color:#eaf2ff;background:#091426}
+*{box-sizing:border-box}
+body{margin:0}
+header{padding:18px 6%;display:flex;align-items:center;justify-content:space-between;gap:12px;background:#0e1d34}
+.logo{font-size:22px;font-weight:800;color:#65dcff}
+select,input,button{font:inherit;border-radius:10px;padding:13px;border:1px solid #344b68}
+select,input{background:#14263e;color:white;width:100%}
+button{background:#16b8db;color:#061728;font-weight:700;cursor:pointer;border:0}
+button:hover{background:#64ddf5}
+.lang{max-width:150px}
+.hero{text-align:center;padding:65px 6% 35px;background:linear-gradient(145deg,#122d54,#091426)}
+.hero h1{font-size:clamp(32px,6vw,58px);margin:12px auto;max-width:850px}
+.hero h1 span{color:#53d8ff}
+.hero p{color:#b9cce3;line-height:1.7}
+.people{display:flex;justify-content:center;gap:14px;margin:28px 0;font-size:42px}
+.wrap{max-width:1050px;margin:auto;padding:30px 18px}
+.panel,.card{background:#14243c;border:1px solid #29415d;border-radius:18px;padding:22px;margin-bottom:20px}
+h2{font-size:26px}
+.muted{color:#aabed4}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.field{display:flex;flex-direction:column;gap:7px}
+label{font-size:14px;color:#bcd0e7}
+.full{grid-column:1/-1}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.actions button{flex:1;min-width:150px}
+.secondary{background:#243c5c;color:white}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.feature{background:#12243c;padding:22px;border-radius:16px}
+.feature b{color:#6cddff}
+#results{margin-top:18px}
+.cv{background:white;color:#182439;padding:28px;border-radius:12px;min-height:200px;line-height:1.6}
+.cv h2{margin-bottom:5px;color:#173a67}
+.cv .muted{color:#52657d}
+footer{text-align:center;color:#9db3cc;padding:35px}
+@media(max-width:650px){
+.grid,.features{grid-template-columns:1fr}
+.hero{padding-top:38px}
+header{padding:15px}
+}
+@media print{
+body *{visibility:hidden}
+#cvPreview,#cvPreview *{visibility:visible}
+#cvPreview{position:absolute;top:0;left:0;width:100%;border:0}
+}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">✦ CareerPilot AI</div>
+<select class="lang" id="language" aria-label="Language">
+<option value="en">English</option>
+<option value="pt">Português</option>
+<option value="fr">Français</option>
+<option value="es">Español</option>
+<option value="de">Deutsch</option>
+<option value="it">Italiano</option>
+<option value="ar">العربية</option>
+<option value="hi">हिन्दी</option>
+<option value="bn">বাংলা</option>
+<option value="zh">中文</option>
+</select>
+</header>
+
+<section class="hero">
+<div class="people">👩🏽‍💼 👨🏻‍💻 👩🏿‍🎓</div>
+<h1 id="headline">Your career. <span>Without borders.</span></h1>
+<p id="subtitle">Explore international opportunities and create a professional CV for free.</p>
+</section>
+
+<main class="wrap">
+<section class="panel">
+<h2 id="searchTitle">Find your next opportunity</h2>
+<p class="muted" id="searchIntro">Search across countries and career paths.</p>
+<div class="grid">
+<div class="field">
+<label for="job">Job title or keyword</label>
+<input id="job" placeholder="e.g. Hotel Manager">
+</div>
+<div class="field">
+<label for="country">Country</label>
+<select id="country">
+<option value="gb">United Kingdom</option>
+<option value="pt">Portugal</option>
+<option value="fr">France</option>
+<option value="de">Germany</option>
+<option value="es">Spain</option>
+<option value="it">Italy</option>
+<option value="nl">Netherlands</option>
+<option value="be">Belgium</option>
+<option value="at">Austria</option>
+<option value="pl">Poland</option>
+<option value="us">United States</option>
+<option value="ca">Canada</option>
+<option value="au">Australia</option>
+<option value="in">India</option>
+<option value="br">Brazil</option>
+<option value="sg">Singapore</option>
+</select>
+</div>
+<div class="field">
+<label for="city">City or region</label>
+<input id="city" placeholder="Optional">
+</div>
+<div class="field">
+<label for="salary">Minimum annual salary</label>
+<input id="salary" type="number" min="0" placeholder="Optional">
+</div>
+<div class="field">
+<label for="work">Work arrangement</label>
+<select id="work">
+<option value="">Any</option>
+<option value="remote">Remote</option>
+<option value="onsite">On-site / Hybrid</option>
+</select>
+</div>
+<div class="field">
+<label for="contract">Contract</label>
+<select id="contract">
+<option value="">Any</option>
+<option value="full_time">Full-time</option>
+<option value="part_time">Part-time</option>
+</select>
+</div>
+</div>
+<div class="actions">
+<button id="searchBtn" onclick="searchJobs()">Search jobs</button>
+</div>
+<div id="results" aria-live="polite"></div>
+</section>
+
+<section class="panel">
+<h2 id="cvTitle">Free CV Builder</h2>
+<p class="muted" id="cvIntro">Create your CV, preview it and save it as PDF.</p>
+<div class="grid">
+<div class="field">
+<label for="name">Full name</label>
+<input id="name" placeholder="Your name">
+</div>
+<div class="field">
+<label for="email">Email</label>
+<input id="email" type="email" placeholder="you@example.com">
+</div>
+<div class="field">
+<label for="phone">Phone</label>
+<input id="phone" placeholder="+351 ...">
+</div>
+<div class="field">
+<label for="role">Professional title</label>
+<input id="role" placeholder="Your profession">
+</div>
+<div class="field full">
+<label for="summary">Professional summary</label>
+<input id="summary" placeholder="Describe your professional profile">
+</div>
+<div class="field full">
+<label for="experience">Experience</label>
+<input id="experience" placeholder="Previous jobs and achievements">
+</div>
+<div class="field full">
+<label for="education">Education</label>
+<input id="education" placeholder="Qualifications">
+</div>
+<div class="field full">
+<label for="skills">Skills</label>
+<input id="skills" placeholder="Your main skills">
+</div>
+<div class="field full">
+<label for="template">CV template</label>
+<select id="template">
+<option value="classic">Classic</option>
+<option value="modern">Modern</option>
+<option value="minimal">Minimal</option>
+</select>
+</div>
+</div>
+<div class="actions">
+<button onclick="buildCV()">Preview CV</button>
+<button class="secondary" onclick="printCV()">Save as PDF</button>
+</div>
+<div id="cvPreview" class="cv" style="margin-top:20px">
+<h2>Your professional CV</h2>
+<p class="muted">Complete the fields to generate your preview.</p>
+</div>
+</section>
+
+<h2 id="featuresTitle">Built for global ambition</h2>
+<div class="features">
+<div class="feature"><h3>🌍 Global opportunities</h3><p>Explore jobs across international markets.</p></div>
+<div class="feature"><h3>📄 Free CV builder</h3><p>Create a professional CV without a subscription.</p></div>
+<div class="feature"><h3>🤖 AI-ready platform</h3><p>Advanced AI career tools are planned for future releases.</p></div>
+</div>
+</main>
+
+<footer>
+CareerPilot AI © 2026<br>
+Global careers. Real opportunities.<br>
+<small>Independent career platform. Not affiliated with employers or job boards.</small>
+</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const translations={
+en:["Your career. <span>Without borders.</span>","Explore international opportunities and create a professional CV for free.","Find your next opportunity","Search across countries and career paths.","Search jobs","Free CV Builder","Create your CV, preview it and save it as PDF.","Built for global ambition"],
+pt:["A tua carreira. <span>Sem fronteiras.</span>","Explora oportunidades internacionais e cria gratuitamente o teu currículo.","Encontra a tua próxima oportunidade","Pesquisa empregos em vários países e profissões.","Pesquisar empregos","Criador de currículos gratuito","Cria, pré-visualiza e guarda o teu currículo em PDF.","Oportunidades sem fronteiras"],
+fr:["Votre carrière. <span>Sans frontières.</span>","Explorez les opportunités internationales et créez gratuitement votre CV.","Trouvez votre prochain emploi","Recherchez des emplois dans plusieurs pays.","Rechercher","Créateur de CV gratuit","Créez et enregistrez votre CV en PDF.","Une carrière internationale"],
+es:["Tu carrera. <span>Sin fronteras.</span>","Explora oportunidades internacionales y crea tu CV gratis.","Encuentra tu próximo empleo","Busca trabajo en diferentes países.","Buscar empleos","Creador de CV gratuito","Crea y guarda tu CV en PDF.","Oportunidades globales"],
+de:["Deine Karriere. <span>Ohne Grenzen.</span>","Entdecke internationale Jobs und erstelle kostenlos deinen Lebenslauf.","Finde deinen nächsten Job","Suche nach internationalen Stellen.","Jobs suchen","Kostenloser Lebenslauf","Erstelle deinen Lebenslauf als PDF.","Globale Chancen"],
+it:["La tua carriera. <span>Senza confini.</span>","Scopri opportunità internazionali e crea gratuitamente il tuo CV.","Trova il tuo prossimo lavoro","Cerca lavoro in diversi paesi.","Cerca lavoro","CV gratuito","Crea e salva il tuo CV in PDF.","Opportunità globali"],
+ar:["حياتك المهنية. <span>بلا حدود.</span>","اكتشف فرص العمل الدولية وأنشئ سيرتك الذاتية مجاناً.","ابحث عن فرصتك القادمة","ابحث عن وظائف في دول مختلفة.","بحث عن وظائف","إنشاء سيرة ذاتية مجاناً","أنشئ سيرتك الذاتية واحفظها PDF.","فرص عالمية"],
+hi:["आपका करियर। <span>बिना सीमाओं के।</span>","अंतरराष्ट्रीय नौकरियां खोजें और मुफ्त सीवी बनाएं।","अगली नौकरी खोजें","कई देशों में नौकरी खोजें।","नौकरी खोजें","मुफ्त सीवी बिल्डर","सीवी बनाएं और PDF में सहेजें।","वैश्विक अवसर"],
+bn:["আপনার ক্যারিয়ার। <span>সীমানাহীন।</span>","আন্তর্জাতিক চাকরি খুঁজুন এবং বিনামূল্যে সিভি তৈরি করুন।","নতুন চাকরি খুঁজুন","বিভিন্ন দেশে চাকরি খুঁজুন।","চাকরি খুঁজুন","বিনামূল্যে সিভি","সিভি তৈরি করুন এবং PDF সংরক্ষণ করুন।","বিশ্বব্যাপী সুযোগ"],
+zh:["职业发展，<span>无国界。</span>","探索国际工作机会，免费创建专业简历。","寻找下一个工作机会","搜索不同国家的职位。","搜索职位","免费简历制作","创建简历并保存为 PDF。","全球职业机会"]
+};
+function changeLanguage(){
+const l=$("language").value;
+const t=translations[l]||translations.en;
+["headline","subtitle","searchTitle","searchIntro","searchBtn","cvTitle","cvIntro","featuresTitle"].forEach((id,i)=>{
+$(id).innerHTML=t[i];
+});
+document.documentElement.lang=l;
+document.documentElement.dir=l==="ar"?"rtl":"ltr";
+}
+$("language").addEventListener("change",changeLanguage);
+function searchJobs(){
+const job=$("job").value.trim();
+if(!job){
+$("results").textContent="Please enter a job title or keyword.";
+return;
+}
+$("results").textContent="Live job listings are not connected yet. The Adzuna API integration is being prepared. No results have been fabricated.";
+}
+function el(tag,txt){
+const e=document.createElement(tag);
+e.textContent=txt;
+return e;
+}
+function buildCV(){
+const p=$("cvPreview");
+p.replaceChildren();
+const name=$("name").value.trim()||"Your name";
+const role=$("role").value.trim();
+p.appendChild(el("h2",name));
+p.appendChild(el("p",[role,$("email").value,$("phone").value].filter(Boolean).join(" | ")));
+const fields=[
+["Profile","summary"],
+["Experience","experience"],
+["Education","education"],
+["Skills","skills"]
+];
+fields.forEach(([title,id])=>{
+const value=$(id).value.trim();
+if(value){
+p.appendChild(el("h3",title));
+p.appendChild(el("p",value));
+}
+});
+const template=$("template").value;
+p.style.fontFamily=template==="classic"?"Georgia,serif":"Arial,sans-serif";
+p.style.borderTop=template==="modern"?"8px solid #16b8db":"none";
+p.querySelector("h2").style.color=template==="minimal"?"#222":"#173a67";
+}
+function printCV(){
+buildCV();
+window.print();
+}
+changeLanguage();
+</script>
+</body>
+</html>
