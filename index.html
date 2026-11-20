@@ -230,13 +230,83 @@ document.documentElement.lang=l;
 document.documentElement.dir=l==="ar"?"rtl":"ltr";
 }
 $("language").addEventListener("change",changeLanguage);
-function searchJobs(){
-const job=$("job").value.trim();
-if(!job){
-$("results").textContent="Please enter a job title or keyword.";
-return;
-}
-$("results").textContent="Live job listings are not connected yet. The Adzuna API integration is being prepared. No results have been fabricated.";
+async function searchJobs() {
+  const job = $("job").value.trim();
+  const results = $("results");
+
+  if (!job) {
+    results.textContent = "Please enter a job title.";
+    return;
+  }
+
+  const country = $("country").value;
+  const city = $("city").value.trim();
+  const salary = $("salary").value;
+  const work = $("work").value;
+  const contract = $("contract").value;
+
+  results.textContent = "Searching for real jobs...";
+
+  try {
+    const url = new URL(
+      "https://careerpilotai-api.miranda-pacheco1980.workers.dev/"
+    );
+
+    url.searchParams.set("q", job);
+    url.searchParams.set("country", country);
+    url.searchParams.set("page", "1");
+
+    if (city) url.searchParams.set("where", city);
+    if (salary) url.searchParams.set("salary_min", salary);
+    if (contract === "full_time") url.searchParams.set("full_time", "1");
+    if (contract === "part_time") url.searchParams.set("part_time", "1");
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error("API error: " + response.status);
+    }
+
+    const data = await response.json();
+    const jobs = data.results || [];
+
+    results.replaceChildren();
+
+    if (!jobs.length) {
+      results.textContent = "No jobs found.";
+      return;
+    }
+
+    jobs.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "panel";
+
+      const title = document.createElement("h3");
+      title.textContent = item.title || "Job opportunity";
+
+      const company = document.createElement("p");
+      company.textContent =
+        item.company?.display_name || "Company not specified";
+
+      const location = document.createElement("p");
+      location.textContent =
+        item.location?.display_name || "";
+
+      const link = document.createElement("a");
+      link.href = item.redirect_url || "#";
+      link.textContent = "View job / Apply";
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+
+      card.append(title, company, location, link);
+      results.appendChild(card);
+    });
+
+  } catch (error) {
+    results.textContent =
+      "Unable to load jobs. Please try again.";
+    console.error(error);
+  }
 }
 function el(tag,txt){
 const e=document.createElement(tag);
@@ -273,6 +343,7 @@ buildCV();
 window.print();
 }
 changeLanguage();
+  
 </script>
 </body>
 </html>
