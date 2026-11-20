@@ -268,7 +268,7 @@ async function searchJobs() {
     }
 
     const data = await response.json();
-    const jobs = data.results || [];
+    const jobs = data.jobs || [];
 
     results.replaceChildren();
 
