@@ -289,7 +289,7 @@ async function searchJobs() {
 
       const location = document.createElement("p");
       location.textContent =
-        item.location?.display_name || "";
+        item.location?.display_name || "Location not specified";
 
       const link = document.createElement("a");
       link.href = item.redirect_url || "#";
