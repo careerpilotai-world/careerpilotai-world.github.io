@@ -296,7 +296,7 @@ async function searchJobs() {
       link.textContent = "View job / Apply";
       link.target = "_blank";
       link.rel = "noopener noreferrer";
-
+link.style.cssText = "display:inline-block;background:#64ddf5;color:#092238;padding:12px 20px;border-radius:10px;font-weight:bold;text-decoration:none;margin-top:10px;";
       card.append(title, company, location, link);
       results.appendChild(card);
     });
