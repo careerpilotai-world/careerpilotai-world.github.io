@@ -285,8 +285,7 @@ async function searchJobs() {
       title.textContent = item.title || "Job opportunity";
 
       const company = document.createElement("p");
-      company.textContent =
-        item.company?.display_name || "Company not specified";
+      company.textContent = typeof item.company === "string" ? item.company : (item.company?.display_name || "Company not specified");
 
       const location = document.createElement("p");
       location.textContent =
