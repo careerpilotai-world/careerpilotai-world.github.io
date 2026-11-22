@@ -471,8 +471,8 @@ const traduzirTitulosPT = () => {
     "AI-ready platform": "Plataforma preparada para IA"
   };
 
-  document.querySelectorAll("h1,h2,h3,h4").forEach(el => {
-    const original = el.dataset.tituloOriginal || el.textContent.trim();
+  document.querySelectorAll("h1,h2,h3,h4,strong").forEach(el => {
+    const original = el.dataset.tituloOriginal || el.textContent.trim().replace(/^[^\p{L}\p{N}]+/u, "").trim();
     el.dataset.tituloOriginal = original;
     if (traducoes[original]) {
       el.textContent = pt ? traducoes[original] : original;
