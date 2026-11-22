@@ -319,7 +319,7 @@ async function searchJobs() {
         item.location || "Location not specified";
 
       const link = document.createElement("a");
-      link.href = item.redirect_url || "#";
+      link.href = item.url || item.redirect_url || "#";
       link.textContent = "View job / Apply";
       link.target = "_blank";
       link.rel = "noopener noreferrer";
