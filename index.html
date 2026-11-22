@@ -461,7 +461,32 @@ function traduzirInterfacePT() {
   });
 }
 document.getElementById("language")?.addEventListener("change", () => setTimeout(traduzirInterfacePT, 0));
-setTimeout(traduzirInterfacePT, 0);  
+setTimeout(traduzirInterfacePT, 0); 
+const traduzirTitulosPT = () => {
+  const pt = document.getElementById("language")?.value === "pt";
+  const traducoes = {
+    "Your professional CV": "O teu currículo profissional",
+    "Global opportunities": "Oportunidades globais",
+    "Free CV builder": "Criador de currículos gratuito",
+    "AI-ready platform": "Plataforma preparada para IA"
+  };
+
+  document.querySelectorAll("h1,h2,h3,h4").forEach(el => {
+    const original = el.dataset.tituloOriginal || el.textContent.trim();
+    el.dataset.tituloOriginal = original;
+    if (traducoes[original]) {
+      el.textContent = pt ? traducoes[original] : original;
+    }
+  });
+};
+
+const mudarIdiomaAnterior = changeLanguage;
+changeLanguage = function() {
+  mudarIdiomaAnterior();
+  traduzirTitulosPT();
+};
+
+traduzirTitulosPT();  
 </script>
 </body>
 </html>
