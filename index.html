@@ -475,7 +475,7 @@ const traduzirTitulosPT = () => {
     const original = el.dataset.tituloOriginal || el.textContent.trim().replace(/^[^\p{L}\p{N}]+/u, "").trim();
     el.dataset.tituloOriginal = original;
     if (traducoes[original]) {
-      el.textContent = pt ? traducoes[original] : original;
+      el.textContent = ({"Global opportunities":"🌍 ","Free CV builder":"📄 ","AI-ready platform":"🤖 "}[original] || "") + (pt ? traducoes[original] : original);
     }
   });
 };
