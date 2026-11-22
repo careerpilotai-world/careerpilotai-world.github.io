@@ -283,6 +283,30 @@ changeLanguage = function() {
   });
 };
 
+const extraTranslations = {
+  "Skills": "Competências",
+  "CV template": "Modelo de currículo",
+  "Preview CV": "Pré-visualizar currículo",
+  "Save as PDF": "Guardar em PDF",
+  "View job / Apply": "Ver emprego / Candidatar-me",
+  "Global opportunities": "Oportunidades globais",
+  "Free CV builder": "Criador de currículos gratuito",
+  "AI-ready platform": "Plataforma preparada para IA"
+};
+
+const previousChangeLanguage = changeLanguage;
+changeLanguage = function() {
+  previousChangeLanguage();
+  const pt = $("language").value === "pt";
+  document.querySelectorAll("button,label,h3").forEach(el => {
+    const original = el.dataset.translationOriginal || el.textContent.trim();
+    el.dataset.translationOriginal = original;
+    if (extraTranslations[original]) {
+      el.textContent = pt ? extraTranslations[original] : original;
+    }
+  });
+};
+  
 $("language").addEventListener("change",changeLanguage);
 async function searchJobs() {
   const job = $("job").value.trim();
