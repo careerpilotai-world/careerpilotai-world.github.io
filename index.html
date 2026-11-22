@@ -420,7 +420,48 @@ buildCV();
 window.print();
 }
 changeLanguage();
-  
+// Traducoes adicionais para portugues
+function traduzirInterfacePT() {
+  if (document.getElementById("language")?.value !== "pt") return;
+  const traducoes = {
+    "Any": "Qualquer",
+    "Skills": "Competências",
+    "CV template": "Modelo de currículo",
+    "Preview CV": "Pré-visualizar currículo",
+    "Save as PDF": "Guardar em PDF",
+    "Global opportunities": "Oportunidades globais",
+    "Free CV builder": "Criador de currículos gratuito",
+    "AI-ready platform": "Plataforma preparada para IA",
+    "Your professional CV": "O teu currículo profissional",
+    "Complete the fields to generate your preview.": "Preenche os campos para gerar a pré-visualização.",
+    "Explore jobs across international markets.": "Explora empregos em mercados internacionais.",
+    "Create a professional CV without a subscription.": "Cria um currículo profissional sem subscrição.",
+    "Advanced AI career tools are planned for future releases.": "Estão previstas ferramentas avançadas de IA para futuras versões.",
+    "Classic": "Clássico",
+    "View job / Apply": "Ver emprego / Candidatar-me"
+  };
+  document.querySelectorAll("button, label, h3, p, option").forEach(el => {
+    if (el.children.length && el.tagName !== "OPTION") return;
+    const original = el.dataset.ptOriginal || el.textContent.trim();
+    if (!el.dataset.ptOriginal) el.dataset.ptOriginal = original;
+    if (traducoes[original]) el.textContent = traducoes[original];
+  });
+  const exemplos = {
+    "e.g. Hotel Manager": "Ex.: Diretor de hotel",
+    "Optional": "Opcional",
+    "Your name": "O teu nome",
+    "Your profession": "A tua profissão",
+    "Describe your professional profile": "Descreve o teu perfil profissional",
+    "Previous jobs and achievements": "Empregos anteriores e conquistas",
+    "Qualifications": "Habilitações académicas",
+    "Your main skills": "As tuas principais competências"
+  };
+  document.querySelectorAll("input, textarea").forEach(el => {
+    if (exemplos[el.placeholder]) el.placeholder = exemplos[el.placeholder];
+  });
+}
+document.getElementById("language")?.addEventListener("change", () => setTimeout(traduzirInterfacePT, 0));
+setTimeout(traduzirInterfacePT, 0);  
 </script>
 </body>
 </html>
