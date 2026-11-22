@@ -247,6 +247,7 @@ hi:["आपका करियर। <span>बिना सीमाओं क�
 bn:["আপনার ক্যারিয়ার। <span>সীমানাহীন।</span>","আন্তর্জাতিক চাকরি খুঁজুন এবং বিনামূল্যে সিভি তৈরি করুন।","নতুন চাকরি খুঁজুন","বিভিন্ন দেশে চাকরি খুঁজুন।","চাকরি খুঁজুন","বিনামূল্যে সিভি","সিভি তৈরি করুন এবং PDF সংরক্ষণ করুন।","বিশ্বব্যাপী সুযোগ"],
 zh:["职业发展，<span>无国界。</span>","探索国际工作机会，免费创建专业简历。","寻找下一个工作机会","搜索不同国家的职位。","搜索职位","免费简历制作","创建简历并保存为 PDF。","全球职业机会"]
 };
+  
 function changeLanguage(){
 const l=$("language").value;
 const t=translations[l]||translations.en;
@@ -256,6 +257,32 @@ $(id).innerHTML=t[i];
 document.documentElement.lang=l;
 document.documentElement.dir=l==="ar"?"rtl":"ltr";
 }
+  
+const originalChangeLanguage = changeLanguage;
+changeLanguage = function() {
+  originalChangeLanguage();
+  const pt = $("language").value === "pt";
+  const names = {
+    "Job title or keyword": "Profissão ou palavra-chave",
+    "Country": "País",
+    "City or region": "Cidade ou região",
+    "Minimum annual salary": "Salário anual mínimo",
+    "Work arrangement": "Modalidade de trabalho",
+    "Contract": "Tipo de contrato",
+    "Full name": "Nome completo",
+    "Phone": "Telefone",
+    "Professional title": "Título profissional",
+    "Professional summary": "Resumo profissional",
+    "Experience": "Experiência profissional",
+    "Education": "Formação académica"
+  };
+  document.querySelectorAll("label").forEach(label => {
+    const original = label.dataset.original || label.textContent.trim();
+    label.dataset.original = original;
+    label.textContent = pt ? (names[original] || original) : original;
+  });
+};
+
 $("language").addEventListener("change",changeLanguage);
 async function searchJobs() {
   const job = $("job").value.trim();
